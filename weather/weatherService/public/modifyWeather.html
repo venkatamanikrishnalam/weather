@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Modify Weather</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Modify Weather Information</h1>
+    
+    <h2>Update Weather</h2>
+    <input type="text" id="updateCityInput" placeholder="Enter city name" />
+    <input type="text" id="updateWeatherInput" placeholder="Enter new weather info" />
+    <button id="updateWeatherBtn">Update Weather</button>
+
+    <h2>Remove City</h2>
+    <input type="text" id="removeCityInput" placeholder="Enter city name to remove" />
+    <button id="removeCityBtn">Remove City</button>
+
+    <script>
+        // Update Weather Functionality
+        document.getElementById('updateWeatherBtn').addEventListener('click', function() {
+            const city = document.getElementById('updateCityInput').value;
+            const newWeatherInfo = document.getElementById('updateWeatherInput').value;
+
+            fetch(`/weather/${city}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ weather: newWeatherInfo }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City not found or update failed');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        });
+
+        // Remove City Functionality
+        document.getElementById('removeCityBtn').addEventListener('click', function() {
+            const city = document.getElementById('removeCityInput').value;
+
+            fetch(`/weather/${city}`, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City not found or deletion failed');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        });
+    </script>
+</body>
+
+</html>
