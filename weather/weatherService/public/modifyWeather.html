@@ -54,7 +54,7 @@
         document.getElementById('removeCityBtn').addEventListener('click', function() {
             const city = document.getElementById('removeCityInput').value;
 
-            fetch(`/weather/${city}`, {
+            fetch(`/removeCity/${city}`, {
                 method: 'DELETE',
             })
                 .then(response => {

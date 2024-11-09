@@ -42,7 +42,7 @@
         document.getElementById('getWeatherBtn').addEventListener('click', function() {
             const city = document.getElementById('cityInput').value;
 
-            fetch(`/weather/${city}`)
+            fetch(`/getWeather/${city}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('City not found');
